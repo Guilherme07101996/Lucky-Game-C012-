@@ -6,10 +6,12 @@
 package com.mycompany.threads.c012;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,11 +20,26 @@ import javax.swing.JOptionPane;
  */
 public class Tela2 extends javax.swing.JFrame {
 
+    private double acertos = 0;
+    private double erros = 0;
+    private double total_tentativas = 0;
+        
+    
     /**
      * Creates new form Tela2
      */
     public Tela2() {
         initComponents();
+        jPanel3.setSize(290, 132);
+        jPanel3.setMaximumSize(jPanel3.getSize());
+        jPanel3.setMinimumSize(jPanel3.getSize());
+        jPanel3.setPreferredSize(jPanel3.getSize());
+        jPanel2.setSize(377, 253);
+        jPanel2.setMaximumSize(jPanel2.getSize());
+        jPanel2.setMinimumSize(jPanel2.getSize());
+        jPanel2.setPreferredSize(jPanel2.getSize());
+        jPanel4.setVisible(false);
+        jPanel5.setVisible(false);
         new Thread()
         {   
             Random random = new Random();            
@@ -73,7 +90,37 @@ public class Tela2 extends javax.swing.JFrame {
                 } catch (InterruptedException ex) {}                
                 }                
             }
-        }.start();
+        }.start();        
+        
+        new Thread()
+        {   
+            Random random = new Random();            
+            
+            public Color pegaCor(){
+            int red = random.nextInt(256);
+            int blue = random.nextInt(256);
+            int green = random.nextInt(256);
+            return new Color(red, green, blue);
+            }
+            
+            @Override
+            public void run()
+            {
+                while(jPanel4.isEnabled() && jPanel5.isEnabled()){
+                try { 
+                    //String casas_fixadas_acertos = "%.2f" + (Double.toString(porcentagemAcertos()))+ " %";
+                    //String casas_fixadas_erros = "%.2f" + (Double.toString(porcentagemErros()))+ " %";
+                    //DecimalFormat formatador = new DecimalFormat("0.00 %");
+                    //System.out.println(formatador.format(porcentagemAcertos()));
+                    jLabel12.setText(Double.toString(getAcertos()));
+                    jLabel16.setText(porcentagemAcertos());
+                    jLabel18.setText(porcentagemErros());
+                    jLabel14.setText(Double.toString(getErros()));
+                    jLabel20.setText(Double.toString(getTotal_tentativas()));
+                } catch (Exception ex) {}                
+                }                
+            }
+        }.start();        
     }
 
     /**
@@ -101,6 +148,7 @@ public class Tela2 extends javax.swing.JFrame {
         imprime = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        estatisticas = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jComboboxCor = new javax.swing.JComboBox<>();
@@ -108,6 +156,19 @@ public class Tela2 extends javax.swing.JFrame {
         nome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
 
         jTextField2.setText("jTextField2");
 
@@ -171,13 +232,23 @@ public class Tela2 extends javax.swing.JFrame {
 
         jLabel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        estatisticas.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        estatisticas.setText("Estatísticas");
+        estatisticas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estatisticasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(22, 22, 22)
                 .addComponent(voltar)
+                .addGap(26, 26, 26)
+                .addComponent(estatisticas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(imprime)
                 .addGap(34, 34, 34))
@@ -193,7 +264,7 @@ public class Tela2 extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel7))
-                        .addGap(0, 18, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
@@ -218,7 +289,8 @@ public class Tela2 extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(voltar)
-                    .addComponent(imprime))
+                    .addComponent(imprime)
+                    .addComponent(estatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -282,24 +354,132 @@ public class Tela2 extends javax.swing.JFrame {
                 .addGap(0, 34, Short.MAX_VALUE))
         );
 
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel11.setText("Número de acertos: ");
+
+        jLabel12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel13.setText("Número de erros: ");
+
+        jLabel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel15.setText("Porcentagem de acertos: ");
+
+        jLabel16.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel17.setText("Porcentagem de erros: ");
+
+        jLabel18.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel19.setText("Número total de tentativas: ");
+
+        jLabel20.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel21.setText("Estatísticas do game: ");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -321,60 +501,6 @@ public class Tela2 extends javax.swing.JFrame {
               
     }//GEN-LAST:event_mostraActionPerformed
 
-    private void voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarActionPerformed
-        TelaInicial telaInicial = new TelaInicial();
-        telaInicial.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_voltarActionPerformed
-
-    private void nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeActionPerformed
-       //JTextField
-    }//GEN-LAST:event_nomeActionPerformed
-
-    private void imprimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imprimeActionPerformed
-       String cor_nome = nome.getText();
-       Random random = new Random();       
-       jLabel8.setText(cor_nome);
-       int aleatorio = random.nextInt(10);       
-       jLabel9.setText(Integer.toString(aleatorio));         
-        switch ((String)jComboboxCor.getSelectedItem()) {
-            case "Azul":
-                jLabel8.setForeground(Color.blue);
-                jLabel9.setForeground(Color.blue);
-                jLabel10.setForeground(Color.blue);                
-                break;
-                
-            case "Vermelho":
-                jLabel8.setForeground(Color.red);
-                jLabel9.setForeground(Color.red);
-                jLabel10.setForeground(Color.red); 
-                break;
-                
-            case "Preto":
-                jLabel8.setForeground(Color.black);
-                jLabel9.setForeground(Color.black);
-                jLabel10.setForeground(Color.black); 
-                break;
-                
-            case "Verde":
-                jLabel8.setForeground(Color.green);
-                jLabel9.setForeground(Color.green);
-                jLabel10.setForeground(Color.green); 
-                break;
-            default:
-                throw new AssertionError();
-        }
-        if(jTextField1.getText() == null ? jLabel9.getText() == null : jTextField1.getText().equals(jLabel9.getText())) {
-            JOptionPane.showMessageDialog(null, nome.getText() + " voce acertou, Parabéns!!", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, nome.getText() +", Não foi dessa vez :(   tente novamente!", "Aviso", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_imprimeActionPerformed
-
-    private void jComboboxCorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboboxCorActionPerformed
-        
-    }//GEN-LAST:event_jComboboxCorActionPerformed
-
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         
     }//GEN-LAST:event_jTextField3ActionPerformed
@@ -382,6 +508,151 @@ public class Tela2 extends javax.swing.JFrame {
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         
     }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeActionPerformed
+        //JTextField
+    }//GEN-LAST:event_nomeActionPerformed
+
+    private void jComboboxCorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboboxCorActionPerformed
+
+    }//GEN-LAST:event_jComboboxCorActionPerformed
+
+    private void estatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estatisticasActionPerformed
+        jPanel4.setVisible(true);
+        jPanel5.setVisible(true);
+    }//GEN-LAST:event_estatisticasActionPerformed
+
+    private void imprimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imprimeActionPerformed
+        String cor_nome = nome.getText();
+        Random random = new Random();
+        jLabel8.setText(cor_nome);
+        int aleatorio = random.nextInt(10);
+        jLabel9.setText(Integer.toString(aleatorio));
+
+        try {
+            if(nome.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, " Você precisa inserir o seu nome!", "Aviso", JOptionPane.ERROR_MESSAGE);
+            } else if (jTextField1.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, nome.getText() +", Você precisa inserir um número entre 0 e 10!", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
+            String numero = jTextField1.getText();
+            int numero_convertido = Integer.parseInt(numero);
+            if(numero_convertido < 0 || numero_convertido > 10) {
+                JOptionPane.showMessageDialog(null, nome.getText() +", o número escolhido deve ser entre 0 e 10!", "Aviso", JOptionPane.ERROR_MESSAGE);
+            } else {
+                switch ((String)jComboboxCor.getSelectedItem()) {
+                    case "Azul":
+                    jLabel8.setForeground(Color.blue);
+                    jLabel9.setForeground(Color.blue);
+                    jLabel10.setForeground(Color.blue);
+                    if(jPanel4.isEnabled() && jPanel5.isEnabled()) {
+                        jLabel12.setForeground(Color.blue);
+                        jLabel16.setForeground(Color.blue);
+                        jLabel18.setForeground(Color.blue);
+                        jLabel14.setForeground(Color.blue);
+                        jLabel20.setForeground(Color.blue);
+                    }
+                    break;
+
+                    case "Vermelho":
+                    jLabel8.setForeground(Color.red);
+                    jLabel9.setForeground(Color.red);
+                    jLabel10.setForeground(Color.red);
+                    if(jPanel4.isEnabled() && jPanel5.isEnabled()) {
+                        jLabel12.setForeground(Color.red);
+                        jLabel16.setForeground(Color.red);
+                        jLabel18.setForeground(Color.red);
+                        jLabel14.setForeground(Color.red);
+                        jLabel20.setForeground(Color.red);
+                    }
+                    break;
+
+                    case "Preto":
+                    jLabel8.setForeground(Color.black);
+                    jLabel9.setForeground(Color.black);
+                    jLabel10.setForeground(Color.black);
+                    if(jPanel4.isEnabled() && jPanel5.isEnabled()) {
+                        jLabel12.setForeground(Color.black);
+                        jLabel16.setForeground(Color.black);
+                        jLabel18.setForeground(Color.black);
+                        jLabel14.setForeground(Color.black);
+                        jLabel20.setForeground(Color.black);
+                    }
+                    break;
+
+                    case "Verde":
+                    jLabel8.setForeground(Color.green);
+                    jLabel9.setForeground(Color.green);
+                    jLabel10.setForeground(Color.green);
+                    if(jPanel4.isEnabled() && jPanel5.isEnabled()) {
+                        jLabel12.setForeground(Color.green);
+                        jLabel16.setForeground(Color.green);
+                        jLabel18.setForeground(Color.green);
+                        jLabel14.setForeground(Color.green);
+                        jLabel20.setForeground(Color.green);
+                    }
+                    break;
+                    default:
+                    throw new AssertionError();
+                }
+                if(jTextField1.getText() == null ? jLabel9.getText() == null : jTextField1.getText().equals(jLabel9.getText())) {
+                    JOptionPane.showMessageDialog(null, nome.getText() + " voce acertou, Parabéns!!", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    acertos++;
+                    double recebe_acertos = acertos;
+                    setAcertos(recebe_acertos);                    
+                } else {
+                    JOptionPane.showMessageDialog(null, nome.getText() +", Não foi dessa vez :(   tente novamente!", "Aviso", JOptionPane.ERROR_MESSAGE);
+                    erros++;
+                    double recebe_erros = erros;
+                    setErros(recebe_erros);
+                }
+            }
+            total_tentativas++;
+            double recebe_tentativas = total_tentativas;
+            setTotal_tentativas(recebe_tentativas);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        /*switch ((String)jComboboxCor.getSelectedItem()) {
+            case "Azul":
+            jLabel8.setForeground(Color.blue);
+            jLabel9.setForeground(Color.blue);
+            jLabel10.setForeground(Color.blue);
+            break;
+
+            case "Vermelho":
+            jLabel8.setForeground(Color.red);
+            jLabel9.setForeground(Color.red);
+            jLabel10.setForeground(Color.red);
+            break;
+
+            case "Preto":
+            jLabel8.setForeground(Color.black);
+            jLabel9.setForeground(Color.black);
+            jLabel10.setForeground(Color.black);
+            break;
+
+            case "Verde":
+            jLabel8.setForeground(Color.green);
+            jLabel9.setForeground(Color.green);
+            jLabel10.setForeground(Color.green);
+            break;
+            default:
+            throw new AssertionError();
+        }
+        if(jTextField1.getText() == null ? jLabel9.getText() == null : jTextField1.getText().equals(jLabel9.getText())) {
+            JOptionPane.showMessageDialog(null, nome.getText() + " voce acertou, Parabéns!!", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, nome.getText() +", Não foi dessa vez :(   tente novamente!", "Aviso", JOptionPane.ERROR_MESSAGE);
+        }*/
+
+    }//GEN-LAST:event_imprimeActionPerformed
+
+    private void voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarActionPerformed
+        TelaInicial telaInicial = new TelaInicial();
+        telaInicial.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_voltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -420,11 +691,23 @@ public class Tela2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton estatisticas;
     private javax.swing.JButton imprime;
     private javax.swing.JComboBox<String> jComboboxCor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -435,6 +718,8 @@ public class Tela2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
@@ -444,4 +729,44 @@ public class Tela2 extends javax.swing.JFrame {
     private java.awt.TextField textField1;
     private javax.swing.JButton voltar;
     // End of variables declaration//GEN-END:variables
+
+    public double getAcertos() {
+        return acertos;
+    }    
+    
+    public void setAcertos(double acertos) {
+        this.acertos = acertos;
+    }
+
+    public double getErros() {
+        return erros;
+    }
+
+    public void setErros(double erros) {
+        this.erros = erros;
+    }
+
+    public double getTotal_tentativas() {
+        return total_tentativas;
+    }
+
+    public void setTotal_tentativas(double total_tentativas) {
+        this.total_tentativas = total_tentativas;
+    }
+    
+    public String porcentagemAcertos() {
+        double resposta;
+        resposta = (getAcertos()/getTotal_tentativas());
+        DecimalFormat formatador = new DecimalFormat("0.00 %");
+        
+        return formatador.format(resposta);
+    }
+    
+    public String porcentagemErros() {
+        double resposta;        
+        resposta = (getErros()/getTotal_tentativas());
+        DecimalFormat formatador = new DecimalFormat("0.00 %"); 
+        
+        return formatador.format(resposta);
+    }
 }

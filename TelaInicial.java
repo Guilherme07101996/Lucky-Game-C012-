@@ -164,7 +164,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Tela2 tela2 = new Tela2();
-        tela2.setVisible(true);
+        tela2.setVisible(true);        
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
